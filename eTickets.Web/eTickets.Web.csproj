@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\eTickets.Data\eTickets.Data.csproj" />
     <ProjectReference Include="..\eTickets.Models\eTickets.Models.csproj" />
     <ProjectReference Include="..\eTickets.Utility\eTickets.Utility.csproj" />
