@@ -8,6 +8,11 @@ namespace eTickets.Models
 {
     public enum MovieCategory
     {
-        Action,Comedy,Drama,Documentary
+        Action = 1,
+        Comedy,
+        Drama, 
+        Documentary, 
+        Cartoon, 
+        Horror
     }
 }
