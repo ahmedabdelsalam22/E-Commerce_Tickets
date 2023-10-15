@@ -2,6 +2,7 @@ using eTickets.Data;
 using eTickets.Data.Services.IRepositories;
 using eTickets.Data.Services.Repositories;
 using eTickets.Data.Services.UnitOfWork;
+using eTickets.Utility;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ option.UseSqlServer(connectionString: connectionString)
 
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 var app = builder.Build();
 
