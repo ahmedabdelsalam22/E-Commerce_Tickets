@@ -1,4 +1,6 @@
 using eTickets.Data;
+using eTickets.Data.Services.IRepositories;
+using eTickets.Data.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(option=>
 option.UseSqlServer(connectionString: connectionString)
 );
+
+builder.Services.AddScoped<IActorRepository, ActorRepository>();
 
 var app = builder.Build();
 
