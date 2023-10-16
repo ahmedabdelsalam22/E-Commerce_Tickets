@@ -18,10 +18,12 @@ namespace eTickets.Data.Services.UnitOfWork
             producerRepository = new ProducerRepository(_context);
             cinemaRepository = new CinemaRepository(_context);
             categoryRepository = new CategoryRepository(_context);
+            movieRepository = new MovieRepository(_context);
         }
         public IActorRepository actorRepository { get; private set; }
         public IProducerRepository producerRepository { get; private set; }
         public ICinemaRepository cinemaRepository { get; private set; }
         public ICategoryRepository categoryRepository { get; private set; }
+        public IMovieRepository movieRepository { get; private set; }
     }
 }
