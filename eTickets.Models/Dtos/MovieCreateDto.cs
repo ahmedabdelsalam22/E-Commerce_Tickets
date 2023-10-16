@@ -26,9 +26,9 @@ namespace eTickets.Models.Dtos
         public int ProducerId { get; set; }
         [Required]
         public int CategoryId { get; set; }
-        public Cinema Cinema { get; set; }
-        public Producer Producer { get; set; }
-        public Category Category { get; set; }
+        public Cinema? Cinema { get; set; }
+        public Producer? Producer { get; set; }
+        public Category? Category { get; set; }
 
 
     }
