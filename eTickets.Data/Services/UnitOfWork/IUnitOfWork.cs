@@ -10,5 +10,6 @@ namespace eTickets.Data.Services.UnitOfWork
     public interface IUnitOfWork
     {
         IActorRepository actorRepository { get; }
+        IProducerRepository producerRepository { get; }
     }
 }
