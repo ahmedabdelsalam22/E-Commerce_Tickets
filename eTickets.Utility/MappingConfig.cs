@@ -14,6 +14,7 @@ namespace eTickets.Utility
         public MappingConfig()
         {
             CreateMap<Actor,ActorDto>();
+            CreateMap<ActorCreateDto, Actor>();
         }
     }
 }

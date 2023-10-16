@@ -25,5 +25,26 @@ namespace eTickets.Web.Controllers
 
             return View(actorDtos);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(ActorCreateDto createDto)
+        {
+            if(createDto == null) 
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid) 
+            {
+                Actor actorToDb = _mapper.Map<Actor>(createDto);
+                await _unitOfWork.actorRepository.Create(actorToDb);
+                return RedirectToAction("Index");
+            }
+            return View(createDto);
+        }
     }
 }
