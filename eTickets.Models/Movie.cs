@@ -17,7 +17,6 @@ namespace eTickets.Models
         public double Price { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public MovieCategory MovieCategory { get; set; }
         public List<ActorMovie> ActorsMovies { get; set; }
         public int CinemaId { get; set; }
         [ForeignKey("CinemaId")]
@@ -25,5 +24,8 @@ namespace eTickets.Models
         public int ProducerId { get; set; }
         [ForeignKey("ProducerId")]
         public Producer Producer { get; set; }
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
     }
 }

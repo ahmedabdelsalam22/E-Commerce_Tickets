@@ -12,7 +12,7 @@ using eTickets.Data;
 namespace eTickets.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231014223844_initial")]
+    [Migration("20231016165405_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -65,6 +65,23 @@ namespace eTickets.Data.Migrations
                     b.ToTable("ActorMovies");
                 });
 
+            modelBuilder.Entity("eTickets.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("eTickets.Models.Cinema", b =>
                 {
                     b.Property<int>("Id")
@@ -98,6 +115,9 @@ namespace eTickets.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CinemaId")
                         .HasColumnType("int");
 
@@ -107,9 +127,6 @@ namespace eTickets.Data.Migrations
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("MovieCategory")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -125,6 +142,8 @@ namespace eTickets.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("CinemaId");
 
@@ -179,6 +198,12 @@ namespace eTickets.Data.Migrations
 
             modelBuilder.Entity("eTickets.Models.Movie", b =>
                 {
+                    b.HasOne("eTickets.Models.Category", "Category")
+                        .WithMany("Movies")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("eTickets.Models.Cinema", "Cinema")
                         .WithMany("Movies")
                         .HasForeignKey("CinemaId")
@@ -191,6 +216,8 @@ namespace eTickets.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Category");
+
                     b.Navigation("Cinema");
 
                     b.Navigation("Producer");
@@ -199,6 +226,11 @@ namespace eTickets.Data.Migrations
             modelBuilder.Entity("eTickets.Models.Actor", b =>
                 {
                     b.Navigation("ActorsMovies");
+                });
+
+            modelBuilder.Entity("eTickets.Models.Category", b =>
+                {
+                    b.Navigation("Movies");
                 });
 
             modelBuilder.Entity("eTickets.Models.Cinema", b =>
