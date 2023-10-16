@@ -19,7 +19,7 @@ namespace eTickets.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Actor> actors = await _unitOfWork.actorRepository.GetAllAsync();
+            IEnumerable<Actor> actors = await _unitOfWork.actorRepository.GetAllAsync(tracked:false);
 
             List<ActorDto> actorDtos = _mapper.Map<List<ActorDto>>(actors);
 
@@ -45,6 +45,34 @@ namespace eTickets.Web.Controllers
                 return RedirectToAction("Index");
             }
             return View(createDto);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null || id == 0) 
+            {
+                return BadRequest("id can't be null or zero");
+            }
+            Actor actor = await _unitOfWork.actorRepository.GetAsync(filter:x=>x.Id == id);
+
+            ActorUpdateDto actorUpdateDto = _mapper.Map<ActorUpdateDto>(actor);
+            return View(actorUpdateDto);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(ActorUpdateDto updateDto) 
+        {
+            if (updateDto == null) 
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid) 
+            {
+                Actor actorToDb = _mapper.Map<Actor>(updateDto);
+                await _unitOfWork.actorRepository.Update(actorToDb);
+                return RedirectToAction("Index");
+            }
+            return View(updateDto);
         }
     }
 }
