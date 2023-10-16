@@ -43,5 +43,33 @@ namespace eTickets.Web.Controllers
             }
             return View(createDto);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return BadRequest("id can't be null or zero");
+            }
+            Producer producer = await _unitOfWork.producerRepository.GetAsync(filter: x => x.Id == id);
+
+            ProducerUpdateDto producerUpdateDto = _mapper.Map<ProducerUpdateDto>(producer);
+            return View(producerUpdateDto);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(ProducerUpdateDto updateDto)
+        {
+            if (updateDto == null)
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+                Producer producerToDb = _mapper.Map<Producer>(updateDto);
+                await _unitOfWork.producerRepository.Update(producerToDb);
+                return RedirectToAction("Index");
+            }
+            return View(updateDto);
+        }
     }
 }
