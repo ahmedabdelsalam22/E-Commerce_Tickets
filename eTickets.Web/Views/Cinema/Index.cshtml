@@ -1,0 +1,60 @@
+﻿@using eTickets.Models.Dtos;
+@model IEnumerable<CinemaDto>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+
+        <div class="row pt-4 text-end">
+            <div class="col-12 text-end">
+                <a asp-controller="Cinema" asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-patch-plus"></i> &nbsp; Create New Cinema
+                </a>
+            </div>
+        </div>
+
+
+        <table class="table">
+            <thead>
+                <tr class="text-center">
+                    <th>Logo</th>
+                    <th>Name</th>
+                    <th>Description</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            <img class="rounded-circle" src="@item.Logo" alt="@item.Name" style="max-width: 150px" />
+                        </td>
+                        <td class="align-middle">
+                            @item.Name
+                        </td>
+                        <td class="align-middle">
+                            @item.Description
+                        </td>
+                        <td class="align-middle">
+                            <a asp-action="Update" class="btn btn-primary" asp-route-id="@item.Id">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+                        <td class="align-middle">
+                            <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">
+                                <i class="bi bi-trash3"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
