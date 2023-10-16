@@ -20,7 +20,7 @@ namespace eTickets.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Movie> movies = await _unitOfWork.movieRepository.GetAllAsync(tracked:false);
+            IEnumerable<Movie> movies = await _unitOfWork.movieRepository.GetAllAsync();
 
             List<MovieDto> movieDtos = _mapper.Map<List<MovieDto>>(movies);  
             return View(movieDtos);
@@ -147,7 +147,7 @@ namespace eTickets.Web.Controllers
             Movie movie = await _unitOfWork.movieRepository.GetAsync(filter: x => x.Id == id);
 
             await _unitOfWork.movieRepository.Delete(movie);
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }
