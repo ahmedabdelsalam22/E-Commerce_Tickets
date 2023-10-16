@@ -23,5 +23,25 @@ namespace eTickets.Web.Controllers
             List<ProducerDto> producerDtos = _mapper.Map<List<ProducerDto>>(producers);
             return View(producerDtos);
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(ProducerCreateDto createDto)
+        {
+            if (createDto == null)
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+                Producer producerToDb = _mapper.Map<Producer>(createDto);
+                await _unitOfWork.producerRepository.Create(producerToDb);
+                return RedirectToAction("Index");
+            }
+            return View(createDto);
+        }
     }
 }
