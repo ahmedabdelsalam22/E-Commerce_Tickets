@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using eTickets.Data.Services.UnitOfWork;
+using eTickets.Models;
+using eTickets.Models.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eTickets.Web.Controllers
@@ -15,9 +17,12 @@ namespace eTickets.Web.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<Movie> movies = await _unitOfWork.movieRepository.GetAllAsync(tracked:false);
+
+            List<MovieDto> movieDtos = _mapper.Map<List<MovieDto>>(movies);  
+            return View(movieDtos);
         }
     }
 }
