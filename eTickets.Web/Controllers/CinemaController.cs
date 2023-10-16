@@ -73,6 +73,16 @@ namespace eTickets.Web.Controllers
             }
             return View(updateDto);
         }
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return BadRequest("id can't be null or zero");
+            }
+            Cinema cinema = await _unitOfWork.cinemaRepository.GetAsync(filter: x => x.Id == id);
 
+            await _unitOfWork.cinemaRepository.Delete(cinema);
+            return RedirectToAction("Index");
+        }
     }
 }
