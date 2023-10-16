@@ -12,5 +12,6 @@ namespace eTickets.Data.Services.UnitOfWork
         IActorRepository actorRepository { get; }
         IProducerRepository producerRepository { get; }
         ICinemaRepository cinemaRepository { get; }
+        ICategoryRepository categoryRepository { get; }
     }
 }
