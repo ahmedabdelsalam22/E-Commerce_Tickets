@@ -16,5 +16,7 @@ namespace eTickets.Models.Dtos
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string ImageURL { get; set; }
+        public Cinema Cinema { get; set; }
+        public Category Category { get; set; }
     }
 }
