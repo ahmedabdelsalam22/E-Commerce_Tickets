@@ -19,6 +19,7 @@ namespace eTickets.Data
         public DbSet<ActorMovie> ActorMovies { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Producer> Producers { get; set; }
+        public DbSet<Category> Categories { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

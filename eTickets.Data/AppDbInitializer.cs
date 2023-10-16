@@ -19,6 +19,19 @@ namespace eTickets.Data
 
                 context.Database.EnsureCreated();
 
+                //Categories
+                if (!context.Categories.Any())
+                {
+                    context.Categories.AddRange(new List<Category>()
+                    {
+                        new Category(){Name= "Documentary"},
+                        new Category(){Name= "Action"},
+                        new Category(){Name= "Drama"},
+                        new Category(){Name= "Carton"},
+                        new Category(){Name= "Horror"},
+                    });
+                    context.SaveChanges();
+                }
                 //Cinema
                 if (!context.Cinemas.Any())
                 {
@@ -135,6 +148,8 @@ namespace eTickets.Data
                     });
                     context.SaveChanges();
                 }
+               
+
                 //Movies
                 if (!context.Movies.Any())
                 {
@@ -150,7 +165,7 @@ namespace eTickets.Data
                             EndDate = DateTime.Now.AddDays(10),
                             CinemaId = 3,
                             ProducerId = 3,
-                            MovieCategory = MovieCategory.Documentary
+                            CategoryId=1
                         },
                         new Movie()
                         {
@@ -162,7 +177,7 @@ namespace eTickets.Data
                             EndDate = DateTime.Now.AddDays(3),
                             CinemaId = 1,
                             ProducerId = 1,
-                            MovieCategory = MovieCategory.Action
+                            CategoryId=2
                         },
                         new Movie()
                         {
@@ -174,7 +189,7 @@ namespace eTickets.Data
                             EndDate = DateTime.Now.AddDays(7),
                             CinemaId = 4,
                             ProducerId = 4,
-                            MovieCategory = MovieCategory.Horror
+                            CategoryId=5
                         },
                         new Movie()
                         {
@@ -186,7 +201,7 @@ namespace eTickets.Data
                             EndDate = DateTime.Now.AddDays(-5),
                             CinemaId = 1,
                             ProducerId = 2,
-                            MovieCategory = MovieCategory.Documentary
+                            CategoryId=1
                         },
                         new Movie()
                         {
@@ -198,7 +213,7 @@ namespace eTickets.Data
                             EndDate = DateTime.Now.AddDays(-2),
                             CinemaId = 1,
                             ProducerId = 3,
-                            MovieCategory = MovieCategory.Cartoon
+                            CategoryId=4
                         },
                         new Movie()
                         {
@@ -210,7 +225,7 @@ namespace eTickets.Data
                             EndDate = DateTime.Now.AddDays(20),
                             CinemaId = 1,
                             ProducerId = 5,
-                            MovieCategory = MovieCategory.Drama
+                            CategoryId = 3
                         }
                     });
                     context.SaveChanges();
@@ -316,7 +331,7 @@ namespace eTickets.Data
                     });
                     context.SaveChanges();
                 }
-
+                
             }
         }
     }

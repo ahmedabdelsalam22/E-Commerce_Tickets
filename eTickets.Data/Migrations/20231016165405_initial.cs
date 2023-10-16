@@ -27,6 +27,19 @@ namespace eTickets.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cinemas",
                 columns: table => new
                 {
@@ -67,13 +80,19 @@ namespace eTickets.Data.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    MovieCategory = table.Column<int>(type: "int", nullable: false),
                     CinemaId = table.Column<int>(type: "int", nullable: false),
-                    ProducerId = table.Column<int>(type: "int", nullable: false)
+                    ProducerId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Movies_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Movies_Cinemas_CinemaId",
                         column: x => x.CinemaId,
@@ -118,6 +137,11 @@ namespace eTickets.Data.Migrations
                 column: "ActorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Movies_CategoryId",
+                table: "Movies",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Movies_CinemaId",
                 table: "Movies",
                 column: "CinemaId");
@@ -139,6 +163,9 @@ namespace eTickets.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Movies");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Cinemas");
