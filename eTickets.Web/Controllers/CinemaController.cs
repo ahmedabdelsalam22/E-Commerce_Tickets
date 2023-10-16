@@ -25,6 +25,26 @@ namespace eTickets.Web.Controllers
 
             return View(cinemaDtos);
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(CinemaCreateDto createDto)
+        {
+            if (createDto == null)
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+                Cinema cinemaToDb = _mapper.Map<Cinema>(createDto);
+                await _unitOfWork.cinemaRepository.Create(cinemaToDb);
+                return RedirectToAction("Index");
+            }
+            return View(createDto);
+        }
 
     }
 }
