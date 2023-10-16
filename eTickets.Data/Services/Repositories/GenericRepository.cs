@@ -32,12 +32,19 @@ namespace eTickets.Data.Services.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(bool tracked = true)
+        public async Task<IEnumerable<T>> GetAllAsync(bool tracked = true, string[] includes = null)
         {
             IQueryable<T> query = _dbSet;
             if (!tracked) 
             {
                 query = query.AsNoTracking();
+            }
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
             }
             return await query.ToListAsync();
         }
