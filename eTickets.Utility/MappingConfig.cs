@@ -31,6 +31,8 @@ namespace eTickets.Utility
 
             CreateMap<Movie, MovieDto>();
             CreateMap<MovieCreateDto, Movie>();
+            CreateMap<MovieUpdateDto, Movie>().ReverseMap();
+
         }
     }
 }
