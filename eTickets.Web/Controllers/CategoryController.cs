@@ -25,6 +25,25 @@ namespace eTickets.Web.Controllers
 
             return View(categoryDtos);
         }
-
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(CategoryCreateDto createDto)
+        {
+            if (createDto == null)
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+                Category categoryToDb = _mapper.Map<Category>(createDto);
+                await _unitOfWork.categoryRepository.Create(categoryToDb);
+                return RedirectToAction("Index");
+            }
+            return View(createDto);
+        }
     }
 }
