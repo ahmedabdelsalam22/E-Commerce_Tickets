@@ -20,6 +20,10 @@ namespace eTickets.Utility
             CreateMap<Producer, ProducerDto>();
             CreateMap<ProducerCreateDto, Producer>();
             CreateMap<ProducerUpdateDto, Producer>().ReverseMap();
+
+            CreateMap<Cinema, CinemaDto>();
+            CreateMap<CinemaCreateDto, Cinema>();
+            CreateMap<CinemaUpdateDto, Cinema>().ReverseMap();
         }
     }
 }
