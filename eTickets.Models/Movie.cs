@@ -17,6 +17,7 @@ namespace eTickets.Models
         public double Price { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string ImageURL { get; set; }
         public List<ActorMovie> ActorsMovies { get; set; }
         public int CinemaId { get; set; }
         [ForeignKey("CinemaId")]
