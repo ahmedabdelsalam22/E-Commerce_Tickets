@@ -18,6 +18,7 @@ option.UseSqlServer(connectionString: connectionString)
 
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
