@@ -37,10 +37,7 @@ namespace eTickets.Web.Controllers
             {
                 return BadRequest();
             }
-            if (createDto.StartDate == createDto.EndDate) 
-            {
-                return BadRequest("startdate and enddate are the same!!");
-            } 
+            
             if (ModelState.IsValid)
             {
                 // related entities -- cinema,producer,category
