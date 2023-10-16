@@ -46,5 +46,33 @@ namespace eTickets.Web.Controllers
             return View(createDto);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return BadRequest("id can't be null or zero");
+            }
+            Cinema cinema = await _unitOfWork.cinemaRepository.GetAsync(filter: x => x.Id == id);
+
+            CinemaUpdateDto cinemaUpdateDto = _mapper.Map<CinemaUpdateDto>(cinema);
+            return View(cinemaUpdateDto);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(CinemaUpdateDto updateDto)
+        {
+            if (updateDto == null)
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+                Cinema cinemaToDb = _mapper.Map<Cinema>(updateDto);
+                await _unitOfWork.cinemaRepository.Update(cinemaToDb);
+                return RedirectToAction("Index");
+            }
+            return View(updateDto);
+        }
+
     }
 }
