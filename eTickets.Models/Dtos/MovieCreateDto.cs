@@ -21,6 +21,8 @@ namespace eTickets.Models.Dtos
         [Required]
         public DateTime EndDate { get; set; }
         [Required]
+        public string ImageURL { get; set; }
+        [Required]
         public int CinemaId { get; set; }
         [Required]
         public int ProducerId { get; set; }
