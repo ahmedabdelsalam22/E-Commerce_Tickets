@@ -74,7 +74,6 @@ namespace eTickets.Web.Controllers
             }
             return View(updateDto);
         }
-        [HttpDelete]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)
