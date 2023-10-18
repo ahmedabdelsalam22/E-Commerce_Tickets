@@ -16,6 +16,12 @@ namespace eTickets.Data.Services.Repositories
             _context = context;
         }
 
+        public List<Actor> GetActorsByMovieId(int? movieId)
+        {
+            var actors = _context.ActorMovies.Where(x => x.MovieId == movieId).Select(x=>x.Actor).ToList();
+            return actors;
+        }
+
         public async Task Update(Actor actor)
         {
             _context.Update(actor);

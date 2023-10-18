@@ -1,5 +1,5 @@
-﻿@using eTickets.Models;
-@model Movie
+﻿@using eTickets.Models.ViewModels;
+@model Movie_Actors_VM
 @{
     ViewData["Title"] = "Details";
 }
@@ -13,39 +13,39 @@
                     <div class="card-header text-white bg-info">
                         <p class="card-text">
                             <h5 class="card-title">
-                                @Model.Name
+                                @Model.Movie.Name
                             </h5>
                         </p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img src="@Model.ImageURL" width="100%" alt="@Model.Name">
+                    <img src="@Model.Movie.ImageURL" width="100%" alt="@Model.Movie.Name">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
-                        <p class="card-text">@Model.Description</p>
+                        <p class="card-text">@Model.Movie.Description</p>
                         <p class="card-text">
                             <b>Cinema: </b>
-                            <a asp-controller="Cinemas" asp-action="Details" asp-route-id="@Model.CinemaId">
-                                @Model.Cinema.Name
+                            <a asp-controller="Cinemas" asp-action="Details" asp-route-id="@Model.Movie.CinemaId">
+                                @Model.Movie.Cinema.Name
                             </a>
                         </p>
                         <p class="card-text">
                             <b>Producer: </b>
-                            <a asp-controller="Producers" asp-action="Details" asp-route-id="@Model.ProducerId">
-                                @Model.Producer.FullName
+                            <a asp-controller="Producers" asp-action="Details" asp-route-id="@Model.Movie.ProducerId">
+                                @Model.Movie.Producer.FullName
                             </a>
                         </p>
-                        <p class="card-text"><b>Category: </b>@Model.Category.Name</p>
-                        <p class="card-text"><b>Start Date: </b>@Model.StartDate.ToString("dd MMM yy")</p>
-                        <p class="card-text"><b>End Date: </b>@Model.EndDate.ToString("dd MMM yy")</p>
+                        <p class="card-text"><b>Category: </b>@Model.Movie.Category.Name</p>
+                        <p class="card-text"><b>Start Date: </b>@Model.Movie.StartDate.ToString("dd MMM yy")</p>
+                        <p class="card-text"><b>End Date: </b>@Model.Movie.EndDate.ToString("dd MMM yy")</p>
                         <p class="card-text ">
                             <b>Status: </b>
-                            @if (DateTime.Now >= Model.StartDate && DateTime.Now <= Model.EndDate)
+                            @if (DateTime.Now >= Model.Movie.StartDate && DateTime.Now <= Model.Movie.EndDate)
                             {
                                 <span class="badge bg-success text-white">AVAILABLE</span>
                             }
-                            else if (DateTime.Now > Model.EndDate)
+                            else if (DateTime.Now > Model.Movie.EndDate)
                             {
                                 <span class="badge bg-danger text-white">EXPIRED</span>
                             }
@@ -54,20 +54,20 @@
                                 <span class="badge bg-primary text-white">UPCOMING</span>
                             }
                         </p>
-                        @* <p class="card-text">
+                        <p class="card-text">
                             <b>Actors: </b>
                             <hr />
                             <div class="row">
-                                @foreach (var actor in Model.ActorsMovies)
+                                @foreach (var actor in Model.Actors)
                                 {
-                                    <div class="column text-center">
-                                        <img class="border-info rounded-circle" src="@actor.Actor.ProfilePictureUrl" style="max-width: 150px" />
+                                    <div class="row text-center">
+                                        <img class="border-info rounded-circle" src="@actor.ProfilePictureUrl" style="max-width: 150px" />
                                         <br />
-                                        <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.ActorId">@actor.Actor.FullName</a>
+                                         <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id">@actor.FullName</a> 
                                     </div>
                                 }
                             </div>
-                        </p> *@
+                        </p>
 
                     </div>
                 </div>
@@ -77,9 +77,9 @@
                             <a class="btn btn-outline-primary float-right" asp-action="Index">
                                 Back to List
                             </a>
-                            <a class="btn btn-success text-white  @((DateTime.Now > Model.EndDate) ? "disabled" : "")"
+                            <a class="btn btn-success text-white  @((DateTime.Now > Model.Movie.EndDate) ? "disabled" : "")"
                                asp-controller="Orders"
-                               asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id"><i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Price.ToString("c"))</a>
+                               asp-action="AddItemToShoppingCart" asp-route-id="@Model.Movie.Id"><i class="bi bi-cart-plus"></i> Add to Cart (Price @Model.Movie.Price.ToString("c"))</a>
                         </p>
                     </div>
                 </div>
