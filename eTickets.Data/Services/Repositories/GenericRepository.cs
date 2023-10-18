@@ -49,7 +49,7 @@ namespace eTickets.Data.Services.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
+        public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true, string[] includes = null)
         {
             IQueryable<T> query = _dbSet;
             if (filter != null) 
@@ -59,6 +59,13 @@ namespace eTickets.Data.Services.Repositories
             if (!tracked)
             {
                 query = query.AsNoTracking();
+            }
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
             }
             return await query.FirstOrDefaultAsync();
         }
