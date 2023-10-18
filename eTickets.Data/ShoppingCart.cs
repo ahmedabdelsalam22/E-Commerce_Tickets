@@ -60,5 +60,22 @@ namespace eTickets.Data
             }
            await _context.SaveChangesAsync();
         }
+
+        public async Task RemoveItemFromCart(Movie movie)
+        {
+            var shoppingCartItemFromDb = await _context.ShoppingCartItems.Where(x => x.Movie.Id == movie.Id && x.ShoppingCartId == ShoppingCartId).FirstOrDefaultAsync();
+
+            if (shoppingCartItemFromDb != null)
+            {
+                if (shoppingCartItemFromDb.Amount > 1)
+                {
+                    shoppingCartItemFromDb.Amount--;
+                }
+                else {
+                     _context.ShoppingCartItems.Remove(shoppingCartItemFromDb);
+                }
+            }
+            await _context.SaveChangesAsync();
+        }
     }
 }
