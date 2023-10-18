@@ -26,15 +26,11 @@
                         <p class="card-text">@Model.Movie.Description</p>
                         <p class="card-text">
                             <b>Cinema: </b>
-                            <a asp-controller="Cinemas" asp-action="Details" asp-route-id="@Model.Movie.CinemaId">
-                                @Model.Movie.Cinema.Name
-                            </a>
+                            @Model.Movie.Cinema.Name
                         </p>
                         <p class="card-text">
                             <b>Producer: </b>
-                            <a asp-controller="Producers" asp-action="Details" asp-route-id="@Model.Movie.ProducerId">
-                                @Model.Movie.Producer.FullName
-                            </a>
+                            @Model.Movie.Producer.FullName
                         </p>
                         <p class="card-text"><b>Category: </b>@Model.Movie.Category.Name</p>
                         <p class="card-text"><b>Start Date: </b>@Model.Movie.StartDate.ToString("dd MMM yy")</p>
@@ -63,7 +59,7 @@
                                     <div class="column text-center">
                                         <img class="border-info rounded-circle" src="@actor.ProfilePictureUrl" style="max-width: 150px" />
                                         <br />
-                                         <a asp-controller="Actors" asp-action="Details" asp-route-id="@actor.Id">@actor.FullName</a> 
+                                        @actor.FullName
                                     </div>
                                 }
                             </div>
