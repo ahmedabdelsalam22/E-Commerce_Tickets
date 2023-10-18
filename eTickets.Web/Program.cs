@@ -22,6 +22,7 @@ builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
 builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IShoppingCart, ShoppingCart>();
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
