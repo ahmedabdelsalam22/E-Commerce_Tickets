@@ -11,5 +11,6 @@ namespace eTickets.Data.Services.IRepositories
     public interface IActorRepository : IGenericRepository<Actor>
     {
         Task Update(Actor actor);
+        List<Actor> GetActorsByMovieId(int? movieId);
     }
 }

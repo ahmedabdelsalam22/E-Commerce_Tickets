@@ -2,6 +2,7 @@
 using eTickets.Data.Services.UnitOfWork;
 using eTickets.Models;
 using eTickets.Models.Dtos;
+using eTickets.Models.ViewModels;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -158,9 +159,17 @@ namespace eTickets.Web.Controllers
             }
             Movie movie = await _unitOfWork.movieRepository.GetAsync(filter: x => x.Id == id,includes: new[] { "Cinema","Category", "Producer" });
 
-           // MovieDto movieDto = _mapper.Map<MovieDto>(movie);
+            // 
+            List<Actor> actors = _unitOfWork.actorRepository.GetActorsByMovieId(id);
 
-            return View(movie);
+
+            Movie_Actors_VM movie_Actors_VM = new() 
+            {
+                Movie = movie,
+                Actors = actors
+            };
+
+            return View(movie_Actors_VM);
         }
     }
 }
