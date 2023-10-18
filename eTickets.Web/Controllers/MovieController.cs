@@ -20,7 +20,7 @@ namespace eTickets.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Movie> movies = await _unitOfWork.movieRepository.GetAllAsync();
+            IEnumerable<Movie> movies = await _unitOfWork.movieRepository.GetAllAsync(includes: new[] { "Cinema","Category"});
 
             List<MovieDto> movieDtos = _mapper.Map<List<MovieDto>>(movies);  
             return View(movieDtos);
@@ -148,6 +148,19 @@ namespace eTickets.Web.Controllers
 
             await _unitOfWork.movieRepository.Delete(movie);
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Details(int? id) 
+        {
+            if (id == null || id == 0)
+            {
+                return BadRequest("id can't be null or zero");
+            }
+            Movie movie = await _unitOfWork.movieRepository.GetAsync(filter: x => x.Id == id,includes: new[] { "Cinema","Category", "Producer" });
+
+           // MovieDto movieDto = _mapper.Map<MovieDto>(movie);
+
+            return View(movie);
         }
     }
 }
