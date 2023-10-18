@@ -185,7 +185,9 @@ namespace eTickets.Web.Controllers
                 return View("Index", filteredMovieDtos);
             }
 
-            return View("Index");
+            List<MovieDto> allMoviesDtos = _mapper.Map<List<MovieDto>>(allMovies);
+
+            return View("Index", allMoviesDtos);
         }
 
     }
