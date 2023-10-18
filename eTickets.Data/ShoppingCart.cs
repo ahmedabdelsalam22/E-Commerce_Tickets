@@ -21,22 +21,44 @@ namespace eTickets.Data
 
         public List<ShoppingCartItem> ShoppingCartItems { get; set; }
 
-        public List<ShoppingCartItem> GetShoppingCartItems()
+        public async Task<List<ShoppingCartItem>> GetShoppingCartItems()
         {
-            if (ShoppingCartItems != null) 
+            if (ShoppingCartItems != null)
             {
                 return ShoppingCartItems;
             }
 
-            ShoppingCartItems =  _context.ShoppingCartItems.Where(x=>x.ShoppingCartId == ShoppingCartId).Include(x=>x.Movie).ToList();
-            
+            ShoppingCartItems = await _context.ShoppingCartItems.Where(x => x.ShoppingCartId == ShoppingCartId).Include(x => x.Movie).ToListAsync();
+
             return ShoppingCartItems;
         }
 
-        public double GetShoppingCartTotal() 
+        public double GetShoppingCartTotal()
         {
             var total = _context.ShoppingCartItems.Where(x => x.ShoppingCartId == ShoppingCartId).Select(x => x.Movie.Price * x.Amount).Sum();
             return total;
+        }
+
+        public async Task AddItemToCart(Movie movie)
+        {
+            var shoppingCartItemFromDb =await _context.ShoppingCartItems.Where(x => x.Movie.Id == movie.Id && x.ShoppingCartId == ShoppingCartId).FirstOrDefaultAsync();
+
+            if (shoppingCartItemFromDb == null)
+            {
+                var ShoppingCartItemToAdd = new ShoppingCartItem()
+                {
+                    ShoppingCartId = ShoppingCartId,
+                    Movie = movie,
+                    Amount = 1
+                };
+
+               await _context.ShoppingCartItems.AddAsync(ShoppingCartItemToAdd);
+            }
+            else 
+            {
+                shoppingCartItemFromDb.Amount++;
+            }
+           await _context.SaveChangesAsync();
         }
     }
 }
