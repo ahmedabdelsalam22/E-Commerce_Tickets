@@ -21,7 +21,6 @@ namespace eTickets.Data.Services.Repositories
 
         public string ShoppingCartId { get; set; }
         public List<ShoppingCartItem> ShoppingCartItems { get; set; }
-
         
         public async Task AddItemToCart(Movie movie)
         {
