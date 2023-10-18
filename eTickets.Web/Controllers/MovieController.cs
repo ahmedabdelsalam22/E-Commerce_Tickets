@@ -174,18 +174,18 @@ namespace eTickets.Web.Controllers
 
         public async Task<IActionResult> Filter(string searchString)
         {
-            var allMovies = await _unitOfWork.movieRepository.GetAllAsync();
+            var allMovies = await _unitOfWork.movieRepository.GetAllAsync(includes: new [] {"Cinema", "Category","Producer" });
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                //var filteredResult = allMovies.Where(n => n.Name.ToLower().Contains(searchString.ToLower()) || n.Description.ToLower().Contains(searchString.ToLower())).ToList();
+                var filteredResult = allMovies.Where(n => n.Name.ToLower().Contains(searchString.ToLower()) || n.Description.ToLower().Contains(searchString.ToLower())).ToList();
 
-                var filteredResultNew = allMovies.Where(n => string.Equals(n.Name, searchString, StringComparison.CurrentCultureIgnoreCase) || string.Equals(n.Description, searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+                List<MovieDto> filteredMovieDtos = _mapper.Map<List<MovieDto>>(filteredResult);
 
-                return View("Index", filteredResultNew);
+                return View("Index", filteredMovieDtos);
             }
 
-            return View("Index", allMovies);
+            return View("Index");
         }
 
     }
