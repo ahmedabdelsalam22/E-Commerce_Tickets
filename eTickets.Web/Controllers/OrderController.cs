@@ -30,5 +30,14 @@ namespace eTickets.Web.Controllers
 
             return View(shoppingCartVM);
         }
+
+        public async Task<IActionResult> RemoveItemFromShoppingCart(int id)
+        {
+
+        }
+        public async Task<IActionResult> AddItemToShoppingCart(int id)
+        {
+
+        }
     }
 }
