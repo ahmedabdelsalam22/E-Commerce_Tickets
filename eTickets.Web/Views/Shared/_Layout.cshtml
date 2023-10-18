@@ -10,48 +10,45 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body>
+
+
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">eTickets.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                
+                <div class="collapse navbar-collapse" id="navbarColor04">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link active" asp-controller="Movie" asp-action="Index">
+                                Movie
+                                <span class="visually-hidden">(current)</span>
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Actor" asp-action="Index">Actor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Producer" asp-action="Index">Producer</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cinema" asp-action="Index">Cinema</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Index">Movie</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Managment</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-controller="Actor" asp-action="Index">Actor</a>
+                                <a class="dropdown-item" asp-controller="Producer" asp-action="Index">Producer</a>
+                                <a class="dropdown-item" asp-controller="Cinema" asp-action="Index">Cinema</a>
+                                <a class="dropdown-item" asp-controller="Category" asp-action="Index">Category</a>
+                            </div>
                         </li>
                     </ul>
-
-                    <form class="form-inline my-2 my-lg-0" asp-controller="Movie" asp-action="Filter" style="padding-right: 25px;">
-                        <input name="searchString" type="text" class="form-control" placeholder="Search for a movie..." aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+                    <form class="d-flex" asp-controller="Movie" asp-action="Filter">
+                        <input class="form-control me-sm-2" name="searchString" type="text" placeholder="Search for a movie...">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                     </form>
-
                 </div>
             </div>
         </nav>
     </header>
+
+
+
+
+
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
