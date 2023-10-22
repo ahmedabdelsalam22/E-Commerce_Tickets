@@ -24,7 +24,14 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IShoppingCart, ShoppingCart>();
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped(x=> ShoppingCart.GetShoppingCart(x));
+
+builder.Services.AddSession();
+
 builder.Services.AddAutoMapper(typeof(MappingConfig));
+
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -41,7 +48,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
+
 app.UseAuthorization();
+app.UseSession();
 
 AppDbInitializer.Seed(app);
 
