@@ -11,8 +11,6 @@
 </head>
 <body>
 
-
-
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -24,6 +22,7 @@
                                 Movie
                                 <span class="visually-hidden">(current)</span>
                             </a>
+
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Managment</a>
@@ -34,6 +33,9 @@
                                 <a class="dropdown-item" asp-controller="Category" asp-action="Index">Category</a>
                             </div>
                         </li>
+                        <a asp-controller="Order" asp-action="ShoppingCart">
+                            <i class="bi bi-cart"></i>
+                        </a>
                     </ul>
                     <form class="d-flex" asp-controller="Movie" asp-action="Filter">
                         <input class="form-control me-sm-2" name="searchString" type="text" placeholder="Search for a movie...">

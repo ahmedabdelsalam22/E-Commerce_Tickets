@@ -16,7 +16,7 @@ namespace eTickets.Web.Controllers
             _shoppingCart = shoppingCart;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> ShoppingCart()
         {
             List<ShoppingCartItem> shoppingCartItemsList = await _shoppingCart.GetShoppingCartItems();
 
@@ -33,11 +33,18 @@ namespace eTickets.Web.Controllers
 
         public async Task<IActionResult> RemoveItemFromShoppingCart(int id)
         {
-
+            return RedirectToAction("Index");
         }
         public async Task<IActionResult> AddItemToShoppingCart(int id)
         {
+            Movie movie = await _movieRepository.GetAsync(filter:x=>x.Id == id , includes: new[] { "Cinema","Producer","Category" } );
 
+            if (movie != null) 
+            {
+                await _shoppingCart.AddItemToCart(movie);
+                return RedirectToAction("ShoppingCart");
+            }
+            return RedirectToAction("Index","Movie");
         }
     }
 }
