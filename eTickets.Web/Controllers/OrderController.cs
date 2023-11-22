@@ -32,10 +32,7 @@ namespace eTickets.Web.Controllers
             return View(shoppingCartVM);
         }
 
-        public async Task<IActionResult> RemoveItemFromShoppingCart(int id)
-        {
-            return RedirectToAction("Index");
-        }
+        
         public async Task<IActionResult> AddItemToShoppingCart(int id)
         {
             Movie movie = await _movieRepository.GetAsync(filter:x=>x.Id == id , includes: new[] { "Cinema","Producer","Category" } );
@@ -46,6 +43,17 @@ namespace eTickets.Web.Controllers
                 return RedirectToAction("ShoppingCart");
             }
             return RedirectToAction("Index","Movie");
+        }
+
+        public async Task<IActionResult> RemoveItemFromShoppingCart(int id)
+        {
+            var item = await _movieRepository.GetAsync(x=>x.Id == id);
+
+            if (item != null)
+            {
+                await _shoppingCart.RemoveItemFromCart(item);
+            }
+            return RedirectToAction(nameof(ShoppingCart));
         }
     }
 }
