@@ -33,14 +33,23 @@
                                 <a class="dropdown-item" asp-controller="Category" asp-action="Index">Category</a>
                             </div>
                         </li>
-                        <a asp-controller="Order" asp-action="ShoppingCart">
-                            <i class="bi bi-cart"></i>
-                        </a>
+                        
+                            <a asp-controller="Order" asp-action="ShoppingCart">
+                                <i class="bi bi-cart4"></i>
+                            </a>
                     </ul>
+
+                    
+
                     <form class="d-flex" asp-controller="Movie" asp-action="Filter">
                         <input class="form-control me-sm-2" name="searchString" type="text" placeholder="Search for a movie...">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                     </form>
+
+                    <ul class="navbar-nav">
+                        @await Component.InvokeAsync("ShoppingCartSummary")
+                    </ul>
+
                 </div>
             </div>
         </nav>
