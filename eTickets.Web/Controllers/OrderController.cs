@@ -1,4 +1,5 @@
 ﻿using eTickets.Data.Services.IRepositories;
+using eTickets.Data.Services.Repositories;
 using eTickets.Models;
 using eTickets.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +9,9 @@ namespace eTickets.Web.Controllers
     public class OrderController : Controller
     {
         private readonly IMovieRepository _movieRepository;
-        private readonly IShoppingCart _shoppingCart;
+        private readonly ShoppingCart _shoppingCart;
 
-        public OrderController(IMovieRepository movieRepository, IShoppingCart shoppingCart)
+        public OrderController(IMovieRepository movieRepository, ShoppingCart shoppingCart)
         {
             _movieRepository = movieRepository;
             _shoppingCart = shoppingCart;
