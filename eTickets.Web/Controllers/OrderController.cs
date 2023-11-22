@@ -3,18 +3,21 @@ using eTickets.Data.Services.Repositories;
 using eTickets.Models;
 using eTickets.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace eTickets.Web.Controllers
 {
     public class OrderController : Controller
     {
         private readonly IMovieRepository _movieRepository;
+        private readonly IOrderService _orderService;
         private readonly ShoppingCart _shoppingCart;
 
-        public OrderController(IMovieRepository movieRepository, ShoppingCart shoppingCart)
+        public OrderController(IMovieRepository movieRepository, ShoppingCart shoppingCart, IOrderService orderService)
         {
             _movieRepository = movieRepository;
             _shoppingCart = shoppingCart;
+            _orderService = orderService;
         }
 
         public  IActionResult ShoppingCart()
@@ -55,5 +58,18 @@ namespace eTickets.Web.Controllers
             }
             return RedirectToAction(nameof(ShoppingCart));
         }
+
+        public async Task<IActionResult> CompleteOrder()
+        {
+            var items = _shoppingCart.GetShoppingCartItems();
+            string userId = "";
+            string userEmailAddress = "";
+
+            await _orderService.StoreOrderAsync(items, userId, userEmailAddress);
+            await _shoppingCart.ClearShoppingCartAsync();
+
+            return View();
+        }
+
     }
 }
