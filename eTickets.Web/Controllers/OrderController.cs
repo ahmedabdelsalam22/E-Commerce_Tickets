@@ -17,9 +17,9 @@ namespace eTickets.Web.Controllers
             _shoppingCart = shoppingCart;
         }
 
-        public async Task<IActionResult> ShoppingCart()
+        public  IActionResult ShoppingCart()
         {
-            List<ShoppingCartItem> shoppingCartItemsList = await _shoppingCart.GetShoppingCartItems();
+            List<ShoppingCartItem> shoppingCartItemsList =  _shoppingCart.GetShoppingCartItems();
 
             double cartTotalPrice =  _shoppingCart.GetShoppingCartTotal();
 

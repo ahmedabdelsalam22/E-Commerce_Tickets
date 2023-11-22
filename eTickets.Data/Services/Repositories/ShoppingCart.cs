@@ -53,14 +53,14 @@ namespace eTickets.Data.Services.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<ShoppingCartItem>> GetShoppingCartItems()
+        public List<ShoppingCartItem> GetShoppingCartItems()
         {
             if (ShoppingCartItems != null)
             {
                 return ShoppingCartItems;
             }
 
-            ShoppingCartItems = await _context.ShoppingCartItems.Where(x => x.ShoppingCartId == ShoppingCartId).Include(x => x.Movie).ToListAsync();
+            ShoppingCartItems = _context.ShoppingCartItems.Where(x => x.ShoppingCartId == ShoppingCartId).Include(x => x.Movie).ToList();
 
             return ShoppingCartItems;
         }
