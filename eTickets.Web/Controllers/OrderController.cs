@@ -68,7 +68,7 @@ namespace eTickets.Web.Controllers
             await _orderService.StoreOrderAsync(items, userId, userEmailAddress);
             await _shoppingCart.ClearShoppingCartAsync();
 
-            return View("OrderCompleted");
+            return View();
         }
 
     }
