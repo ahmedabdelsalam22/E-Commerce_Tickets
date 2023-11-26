@@ -2,6 +2,7 @@
 using eTickets.Data.Services.UnitOfWork;
 using eTickets.Models;
 using eTickets.Models.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eTickets.Web.Controllers
@@ -16,7 +17,7 @@ namespace eTickets.Web.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             IEnumerable<Actor> actors = await _unitOfWork.actorRepository.GetAllAsync(tracked:false);
@@ -27,11 +28,13 @@ namespace eTickets.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
+        [Authorize(Roles ="admin")]
         public async Task<IActionResult> Create(ActorCreateDto createDto)
         {
             if(createDto == null) 
@@ -47,6 +50,7 @@ namespace eTickets.Web.Controllers
             return View(createDto);
         }
 
+        [Authorize(Roles ="admin")]
         [HttpGet]
         public async Task<IActionResult> Update(int? id)
         {
@@ -59,6 +63,7 @@ namespace eTickets.Web.Controllers
             ActorUpdateDto actorUpdateDto = _mapper.Map<ActorUpdateDto>(actor);
             return View(actorUpdateDto);
         }
+        [Authorize(Roles ="admin")]
         [HttpPost]
         public async Task<IActionResult> Update(ActorUpdateDto updateDto) 
         {
@@ -74,6 +79,8 @@ namespace eTickets.Web.Controllers
             }
             return View(updateDto);
         }
+
+        [Authorize(Roles ="admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)

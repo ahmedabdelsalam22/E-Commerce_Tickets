@@ -22,7 +22,12 @@ namespace eTickets.Data.Services.Repositories
         {
             var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Movie).Include(n => n.UserId == userId).ToListAsync();
 
-           
+            if (userRole != "admin")
+            {
+                orders = orders.Where(n => n.UserId == userId).ToList();
+            }
+
+
             return orders;
         }
 

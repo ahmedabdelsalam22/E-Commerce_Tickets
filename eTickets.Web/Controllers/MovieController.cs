@@ -3,6 +3,7 @@ using eTickets.Data.Services.UnitOfWork;
 using eTickets.Models;
 using eTickets.Models.Dtos;
 using eTickets.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace eTickets.Web.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             IEnumerable<Movie> movies = await _unitOfWork.movieRepository.GetAllAsync(includes: new[] { "Cinema","Category"});
@@ -27,11 +28,13 @@ namespace eTickets.Web.Controllers
             return View(movieDtos);
         }
 
+        [Authorize(Roles ="admin")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+        [Authorize(Roles = "admin")]
 
         public async Task<IActionResult> Create(MovieCreateDto createDto)
         {
@@ -80,6 +83,7 @@ namespace eTickets.Web.Controllers
             return View(createDto);
         }
 
+        [Authorize(Roles ="admin")]
         [HttpGet]
         public async Task<IActionResult> Update(int? id)
         {
@@ -92,6 +96,7 @@ namespace eTickets.Web.Controllers
             MovieUpdateDto movieUpdateDto = _mapper.Map<MovieUpdateDto>(movie);
             return View(movieUpdateDto);
         }
+        [Authorize(Roles ="admin")]
         [HttpPost]
         public async Task<IActionResult> Update(MovieUpdateDto updateDto) 
         {
@@ -138,7 +143,7 @@ namespace eTickets.Web.Controllers
             }
             return View("Index");
         }
-
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || id == 0)
@@ -150,7 +155,7 @@ namespace eTickets.Web.Controllers
             await _unitOfWork.movieRepository.Delete(movie);
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         public async Task<IActionResult> Details(int? id) 
         {
             if (id == null || id == 0)
@@ -171,7 +176,7 @@ namespace eTickets.Web.Controllers
 
             return View(movie_Actors_VM);
         }
-
+        [Authorize]
         public async Task<IActionResult> Filter(string searchString)
         {
             var allMovies = await _unitOfWork.movieRepository.GetAllAsync(includes: new [] {"Cinema", "Category","Producer" });

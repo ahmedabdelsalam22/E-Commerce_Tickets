@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@using eTickets.Data;
+@using eTickets.Models;
+@inject SignInManager<ApplicationUser> _singnInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,28 +29,42 @@
                             </a>
 
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Managment</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="Actor" asp-action="Index">Actor</a>
-                                <a class="dropdown-item" asp-controller="Producer" asp-action="Index">Producer</a>
-                                <a class="dropdown-item" asp-controller="Cinema" asp-action="Index">Cinema</a>
-                                <a class="dropdown-item" asp-controller="Category" asp-action="Index">Category</a>
-                            </div>
-                        </li>
+                        @if(_singnInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Managment</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-controller="Actor" asp-action="Index">Actor</a>
+                                    <a class="dropdown-item" asp-controller="Producer" asp-action="Index">Producer</a>
+                                    <a class="dropdown-item" asp-controller="Cinema" asp-action="Index">Cinema</a>
+                                    <a class="dropdown-item" asp-controller="Category" asp-action="Index">Category</a>
+                                </div>
+                            </li>
+                        }
                         
                     </ul>
 
-                    
+                    @if(_singnInManager.IsSignedIn(User))
+                    {
+                        <form class="d-flex" asp-controller="Movie" asp-action="Filter">
+                            <input class="form-control me-sm-2" name="searchString" type="text" placeholder="Search for a movie...">
+                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                        </form>
 
-                    <form class="d-flex" asp-controller="Movie" asp-action="Filter">
-                        <input class="form-control me-sm-2" name="searchString" type="text" placeholder="Search for a movie...">
-                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                    </form>
+                        <ul class="navbar-nav">
+                            @await Component.InvokeAsync("ShoppingCartSummary")
+                        </ul>
 
-                    <ul class="navbar-nav">
-                        @await Component.InvokeAsync("ShoppingCartSummary")
-                    </ul>
+                        <ul class="navbar-nav">
+                            <li>
+                                <a class="btn btn-primary" asp-controller="Order" asp-action="Index">
+                                    Orders
+                                </a>
+                            </li>
+                        </ul>
+                    }
+
+                    <partial name="_LoginPartial" />
 
                 </div>
             </div>
